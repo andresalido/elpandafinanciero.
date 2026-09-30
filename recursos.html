@@ -1,5 +1,23 @@
 <!doctype html>
 <html lang="es-MX"><head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2182084952691723');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2182084952691723&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DBFLB5PW9D"></script>
 <script>
@@ -402,5 +420,31 @@ document.addEventListener('click', function(e){
     });
   }
 });
+</script>
+<script>
+/* Meta Pixel: evento Lead cuando MailerLite confirma el registro */
+(function(){
+  var fired={};
+  var NAMES={UUP13P:'Balance Financiero del Hogar',Agdo1C:'Calculadora Gasto Hormiga'};
+  function visible(el){return el&&el.offsetWidth>0&&el.offsetHeight>0;}
+  function check(box){
+    var id=box.getAttribute('data-form');
+    if(fired[id])return;
+    var ok=box.querySelector('.row-success, .ml-form-successBody, .ml-form-successContent');
+    if(visible(ok)){
+      fired[id]=true;
+      if(typeof fbq==='function'){fbq('track','Lead',{content_name:NAMES[id]||id});}
+    }
+  }
+  function watch(){
+    var boxes=document.querySelectorAll('.ml-embedded[data-form]');
+    for(var i=0;i<boxes.length;i++){
+      (function(box){
+        new MutationObserver(function(){check(box);}).observe(box,{childList:true,subtree:true,attributes:true,attributeFilter:['style','class']});
+      })(boxes[i]);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',watch);}else{watch();}
+})();
 </script>
 </body></html>
